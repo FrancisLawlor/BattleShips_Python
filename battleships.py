@@ -1,8 +1,9 @@
 import random
+import os
 
-player1 = [];
-player2 = [];
-empty = [];
+player1 = []
+player2 = []
+empty = []
 
 ship_x_coordinates_player1=[]
 ship_y_coordinates_player1=[]
@@ -15,113 +16,113 @@ ship_y_coordinates_player2=[]
 # A 2D array is a list where every element is also a list.
 def set_up_board(player):
     for i in range (0, 16):
-        player.append([]); ##create an empty list in every element of the player list.
+        player.append([]) ##create an empty list in every element of the player list.
 
     for i in range (0, 16):
         for j in range (0,8):
-            player[i].append(" _"); #go through every element and assign " _"
+            player[i].append(" _") #go through every element and assign " _"
 
 def clear_screen():
-    for i in range(0,30):
-        print ()
+	os.system('cls')
+	
 # In this function we print out the board, taking each of the two lists as arguments.
 # When printing we go through each line of the whole board and print the two player's lists side by side.
 def print_board(player1, player2):
-    print (" ", end=" ");
+    print (" ", end=" ")
 
     #This part of the code is used to print out the letters on the board.
-    c=0;
+    c=0
     for i in range (0, 16):
-        print (end="  ");
-        print (chr(ord('A')+c), end=" ");
-        c=c+1;
+        print (end="  ") 
+        print (chr(ord('A')+c), end=" ")
+        c=c+1
 
-    print ();
+    print ()
 
     #This part of the code is used to print the numbers on the board.
-    c=0;
-    d=0;
-    num = 1;
+    c=0
+    d=0
+    num = 1
     for i in range (0, 16):
         if(num<10):
-            print (end=" ");
-            print (chr(ord('1')+c), end=" ");
-            c=c+1;
+            print (end=" ")
+            print (chr(ord('1')+c), end=" ")
+            c=c+1
             if(num<11):
-                num=num+1;
+                num=num+1
         if(num>10):
-            print ('1', end="");
-            print (chr(ord('0')+d), end=" ");
-            d=d+1;
-            num=num+1;
+            print ('1', end="")
+            print (chr(ord('0')+d), end=" ")
+            d=d+1
+            num=num+1
 
         if(num==10):
-            num=num+1;
+            num=num+1
 
         # This part of the code prints a line from player1's list
         for j in range (0,8):
-            print (player1[i][j], end="  ");
+            print (player1[i][j], end="  ")
         #This part of the code prints a line from player2's list
         for k in range (0,8):
-            print (player2[i][k], end="  ");
+            print (player2[i][k], end="  ")
 
         # We use the print function here with no arguments to go to a new line before printing the next line of the board.
-        print ();
+        print ()
 
 # This function returns either the number 0 or 1. Which ever number is returned will be used to randomly choose if the ships are horizontal or vertical.
 def vertical_or_horizontal():
-    value = random.randint(0,1);
+    value = random.randint(0,1)
     if value==0:
-        return 0;
+        return 0
     if value==1:
-        return 1;
+        return 1
 
 def place_ship(board, letter):
     # randomise coordinates
-    x=random.randint(0,7);
-    y=random.randint(0,15);
+    x=random.randint(0,7)
+    y=random.randint(0,15)
     #randomise whether ship is horizontal or vertical
-    position=vertical_or_horizontal(); #vertical = 0, horizontal = 1
+    position=vertical_or_horizontal() #vertical = 0, horizontal = 1
 
     if((position==0)):
         #if center of ship is at top row or bottom row of board move it so it can fit.
         if(y==0):
-            y=1;
+            y=1
         if(y==15):
-            y=14;
+            y=14
 
-        board[y][x]= " " + letter;
+        board[y][x]= " " + letter
 
         if((letter != 'F')):
-            board[y-1][x]= " " + letter;
+            board[y-1][x]= " " + letter
         if((letter != 'F') & (letter != 'D')):
-            board[y+1][x]= " " + letter;
+            board[y+1][x]= " " + letter
         if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
             if(y==14):
-                board[y-2][x]= " " + letter;
+                board[y-2][x]= " " + letter
             elif(y==1):
-                board[y+2][x]= " " + letter;
+                board[y+2][x]= " " + letter
             else:
-                board[y+2][x]= " " + letter;
+                board[y+2][x]= " " + letter
 
     if(position==1):
         #if center of ship is at top column or bottom column of board move it so it can fit.
         if (x==0):
-            x=1;
+            x=1
         if (x==7):
-            x=6;
+            x=6
 
-        board[y][x]= " " + letter;
+        board[y][x]= " " + letter
         if(letter != 'F'):
-            board[y][x-1]= " " + letter;
+            board[y][x-1]= " " + letter
 
         if((letter != 'F') & (letter != 'D')):
-            board[y][x+1]= " " + letter;
+            board[y][x+1]= " " + letter
         if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
             if (x>1):
-                board[y][x-2]= " " + letter;
+                board[y][x-2]= " " + letter
             if (x==1):
-                board[y][x+2]= " " + letter;
+                board[y][x+2]= " " + letter
 
 def get_x_input(coordinate):
     c = ord(input("Input value for x: "))
@@ -130,7 +131,7 @@ def get_x_input(coordinate):
         print("Please input letter between 'A' and 'K'")
         c = ord(input("Input value for x: "))
 
-    return c-65;
+    return c-65
 
 def get_y_input(coordinate):
     c = int(input("Input value for y: "))
@@ -171,21 +172,21 @@ def check_win(player,coordinates_x, coordinates_y):
     return win
 
 #set up each player's half of the board.
-set_up_board(player1);
-set_up_board(player2);
-set_up_board(empty);
+set_up_board(player1)
+set_up_board(player2)
+set_up_board(empty)
 
 #place ships for player1
-place_ship(player1, 'F');
-# place_ship(player1, 'D');
-# place_ship(player1, 'C');
-# place_ship(player1, 'B');
+place_ship(player1, 'F')
+# place_ship(player1, 'D')
+# place_ship(player1, 'C')
+# place_ship(player1, 'B')
 
 #place ships for player2
-place_ship(player2, 'F');
-# place_ship(player2, 'D');
-# place_ship(player2, 'C');
-# place_ship(player2, 'B');
+place_ship(player2, 'F')
+# place_ship(player2, 'D')
+# place_ship(player2, 'C')
+# place_ship(player2, 'B')
 
 #get coordinates for ships on board
 get_coordinates_for_ships(player1,ship_x_coordinates_player1, ship_y_coordinates_player1)
@@ -216,7 +217,7 @@ while(win==0):
     #player1's turn
     print_board(player1,empty)
 
-    x=get_x_input(x);
+    x=get_x_input(x)
 
     while ((x<7) | (x>15)):
         print("Please input letter between I and P.")
