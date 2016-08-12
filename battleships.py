@@ -13,14 +13,14 @@ ship_y_coordinates_player2=[]
 
 # Board consists of two 2D arrays placed side by side.
 # Each 2D array is a grid with dimensions 16x8. You can specify positions within the 2D array to place objects.
-# A 2D array is a list where every element is also a list.
+
 def set_up_board(player):
     for i in range (0, 16):
-        player.append([]) ##create an empty list in every element of the player list.
+        player.append([]) # Create an empty list in every element of the player list.
 
     for i in range (0, 16):
         for j in range (0,8):
-            player[i].append(" _") #go through every element and assign " _"
+            player[i].append(" _") # Go through every element and assign " _"
 
 def clear_screen():
 	os.system('cls')
@@ -84,46 +84,99 @@ def place_ship(board, letter):
     #randomise whether ship is horizontal or vertical
     position=vertical_or_horizontal() #vertical = 0, horizontal = 1
 
-    if((position==0)):
-        #if center of ship is at top row or bottom row of board move it so it can fit.
-        if(y==0):
-            y=1
-        if(y==15):
-            y=14
+    if (doesnt_clash(board, x, y, position, letter)): 
+        print ("works, lad", end = "")
+        if((position==0)):
+            #if center of ship is at top row or bottom row of board move it so it can fit.
+            if(y==0):
+                y=1
+            if(y==15):
+                y=14
 
-        board[y][x]= " " + letter
+            board[y][x]= " " + letter
 
-        if((letter != 'F')):
-            board[y-1][x]= " " + letter
-        if((letter != 'F') & (letter != 'D')):
-            board[y+1][x]= " " + letter
+            if((letter != 'F')):
+                board[y-1][x]= " " + letter
+            if((letter != 'F') & (letter != 'D')):
+                board[y+1][x]= " " + letter
+            if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
+                if(y==14):
+                    board[y-2][x]= " " + letter
+                if(y<14):
+                    board[y+2][x]= " " + letter
+
+        if(position==1):
+            #if center of ship is at top column or bottom column of board move it so it can fit.
+            if (x==0):
+                x=1
+            if (x==7):
+                x=6
+
+            board[y][x]= " " + letter
+
+            if(letter != 'F'):
+                board[y][x-1]= " " + letter
+            if((letter != 'F') & (letter != 'D')):
+                board[y][x+1]= " " + letter
+            if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
+                if (x>1):
+                    board[y][x-2]= " " + letter
+                if (x==1):
+                    board[y][x+2]= " " + letter
+    else:
+        place_ship(board, letter)
+        print ("doesn't work", end = "")
+
+def doesnt_clash(board, x, y, orientation, letter):
+
+    if (orientation == 0):
+        if (y == 0):
+            y = 1
+        if (y == 15):
+            y = 14
+
+    if (orientation == 1):
+        if (x == 0):
+            x = 1
+        if (x == 7):
+            x = 6
+
+    if (board[y][x] != " _"):
+        return False
+
+    if (orientation == 0):
+        if ((letter != 'F')):
+            if (board[y-1][x] != " _"):
+                return False
+        if ((letter != 'F') & (letter != 'D')):
+            if (board[y+1][x] != " _"):
+                return False
+        if ((letter != 'F') & (letter != 'D') & (letter!= 'C')):
+            if ((y == 14) & (board[y-2][x] != " _")):
+                return False
+            elif (y < 14):
+                if (board[y+2][x] != " _"):
+                    return False
+
+    print ("x: ", end="")
+    print (x)
+    print ("y: ", end="")
+    print (y)
+    if (orientation == 1):
+        if (letter != 'F'):
+            if (board[y][x-1] != " _"):
+                return False
+        if ((letter != 'F') & (letter != 'D')):
+            if (board[y][x+1] != " _"):
+                return False
         if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
-            if(y==14):
-                board[y-2][x]= " " + letter
-            elif(y==1):
-                board[y+2][x]= " " + letter
-            else:
-                board[y+2][x]= " " + letter
-
-    if(position==1):
-        #if center of ship is at top column or bottom column of board move it so it can fit.
-        if (x==0):
-            x=1
-        if (x==7):
-            x=6
-
-        board[y][x]= " " + letter
-        if(letter != 'F'):
-            board[y][x-1]= " " + letter
-
-        if((letter != 'F') & (letter != 'D')):
-            board[y][x+1]= " " + letter
-        if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
-            if (x>1):
-                board[y][x-2]= " " + letter
-            if (x==1):
-                board[y][x+2]= " " + letter
-
+            if ((x == 6) & (board[y][x - 2] != " _")):
+                return False
+            if (x < 6):
+                if (board[y][x + 2] != " _"):
+                    return False
+    return True
+            
 def get_x_input(coordinate):
     c = ord(input("Input value for x: "))
 
@@ -178,15 +231,15 @@ set_up_board(empty)
 
 #place ships for player1
 place_ship(player1, 'F')
-# place_ship(player1, 'D')
-# place_ship(player1, 'C')
-# place_ship(player1, 'B')
+place_ship(player1, 'D')
+place_ship(player1, 'C')
+place_ship(player1, 'B')
 
 #place ships for player2
 place_ship(player2, 'F')
-# place_ship(player2, 'D')
-# place_ship(player2, 'C')
-# place_ship(player2, 'B')
+place_ship(player2, 'D')
+place_ship(player2, 'C')
+place_ship(player2, 'B')
 
 #get coordinates for ships on board
 get_coordinates_for_ships(player1,ship_x_coordinates_player1, ship_y_coordinates_player1)
