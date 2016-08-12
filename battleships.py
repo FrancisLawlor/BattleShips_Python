@@ -25,12 +25,12 @@ def set_up_board(player):
 def clear_screen():
 	os.system('cls')
 	
-# In this function we print out the board, taking each of the two lists as arguments.
-# When printing we go through each line of the whole board and print the two player's lists side by side.
+# Print out the board, taking each of the two lists as arguments.
+# Go through each line of the whole board and print the two player's lists side by side.
 def print_board(player1, player2):
     print (" ", end=" ")
 
-    #This part of the code is used to print out the letters on the board.
+    # Print out the letters on the board.
     c=0
     for i in range (0, 16):
         print (end="  ") 
@@ -39,7 +39,7 @@ def print_board(player1, player2):
 
     print ()
 
-    #This part of the code is used to print the numbers on the board.
+    # Print the numbers on the board.
     c=0
     d=0
     num = 1
@@ -59,35 +59,40 @@ def print_board(player1, player2):
         if(num==10):
             num=num+1
 
-        # This part of the code prints a line from player1's list
+        # Print a line from player1's list.
         for j in range (0,8):
             print (player1[i][j], end="  ")
-        #This part of the code prints a line from player2's list
+
+        # Print a line from player2's list.
         for k in range (0,8):
             print (player2[i][k], end="  ")
 
-        # We use the print function here with no arguments to go to a new line before printing the next line of the board.
+        # New line.
         print ()
 
 # This function returns either the number 0 or 1. Which ever number is returned will be used to randomly choose if the ships are horizontal or vertical.
 def vertical_or_horizontal():
-    value = random.randint(0,1)
+    value = random.randint(0, 1)
     if value==0:
         return 0
     if value==1:
         return 1
 
 def place_ship(board, letter):
-    # randomise coordinates
+
+    # Randomise coordinate co-ordinate for "center" of ship. Remaining ship co-ordinates will be selected in relation to it.
     x=random.randint(0,7)
     y=random.randint(0,15)
-    #randomise whether ship is horizontal or vertical
-    position=vertical_or_horizontal() #vertical = 0, horizontal = 1
 
+    # Randomise whether ship is horizontal or vertical
+    position=vertical_or_horizontal() # Vertical = 0, Horizontal = 1
+
+    # Check if ship to be placed clashes with any existing ship's co-ordinates.
     if (doesnt_clash(board, x, y, position, letter)): 
         print ("works, lad", end = "")
         if((position==0)):
-            #if center of ship is at top row or bottom row of board move it so it can fit.
+
+            # If center of ship is at top row or bottom row of board, move it so it can fit.
             if(y==0):
                 y=1
             if(y==15):
@@ -106,7 +111,8 @@ def place_ship(board, letter):
                     board[y+2][x]= " " + letter
 
         if(position==1):
-            #if center of ship is at top column or bottom column of board move it so it can fit.
+
+            # If center of ship is at top column or bottom column of board move it so it can fit.
             if (x==0):
                 x=1
             if (x==7):
@@ -201,8 +207,8 @@ def hit_board(x,y,board):
     # print(x)
     # print ("y: ")
     # print(y)
-    if(x>7):
-        x=x-8
+    if ( x > 7):
+        x = x - 8
 
     board[y][x]=' X'
 
