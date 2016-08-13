@@ -1,5 +1,6 @@
 import random
 import BoardSetupUtilities
+import GameUtilities
 
 player1 = []
 player2 = []
@@ -13,165 +14,7 @@ ship_y_coordinates_player1=[]
 
 ship_x_coordinates_player2=[]
 ship_y_coordinates_player2=[]
-	
-# Print out the board, taking each of the two lists as arguments.
-# Go through each line of the whole board and print the two player's lists side by side.
-def print_board(player1, player2):
-    print (" ", end=" ")
-
-    # Print out the letters on the board.
-    c=0
-    for i in range (0, 16):
-        print (end="  ") 
-        print (chr(ord('A')+c), end=" ")
-        c=c+1
-
-    print ()
-
-    # Print the numbers on the board.
-    c=0
-    d=0
-    num = 1
-    for i in range (0, 16):
-        if(num<10):
-            print (end=" ")
-            print (chr(ord('1')+c), end=" ")
-            c=c+1
-            if(num<11):
-                num=num+1
-        if(num>10):
-            print ('1', end="")
-            print (chr(ord('0')+d), end=" ")
-            d=d+1
-            num=num+1
-
-        if(num==10):
-            num=num+1
-
-        # Print a line from player1's list.
-        for j in range (0,8):
-            print (player1[i][j], end="  ")
-
-        # Print a line from player2's list.
-        for k in range (0,8):
-            print (player2[i][k], end="  ")
-
-        # New line.
-        print ()
-
-# This function returns either the number 0 or 1. Which ever number is returned will be used to randomly choose if the ships are horizontal or vertical.
-def vertical_or_horizontal():
-    value = random.randint(0, 1)
-    if value==0:
-        return 0
-    if value==1:
-        return 1
-
-def place_ship(board, letter):
-
-    # Randomise coordinate co-ordinate for "center" of ship. Remaining ship co-ordinates will be selected in relation to it.
-    x=random.randint(0,7)
-    y=random.randint(0,15)
-
-    # Randomise whether ship is horizontal or vertical
-    position=vertical_or_horizontal() # Vertical = 0, Horizontal = 1
-
-    # Check if ship to be placed clashes with any existing ship's co-ordinates.
-    if (doesnt_clash(board, x, y, position, letter)): 
-        print ("works, lad", end = "")
-        if((position==0)):
-
-            # If center of ship is at top row or bottom row of board, move it so it can fit.
-            if(y==0):
-                y=1
-            if(y==15):
-                y=14
-
-            board[y][x]= " " + letter
-
-            if((letter != 'F')):
-                board[y-1][x]= " " + letter
-            if((letter != 'F') & (letter != 'D')):
-                board[y+1][x]= " " + letter
-            if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
-                if(y==14):
-                    board[y-2][x]= " " + letter
-                if(y<14):
-                    board[y+2][x]= " " + letter
-
-        if(position==1):
-
-            # If center of ship is at top column or bottom column of board move it so it can fit.
-            if (x==0):
-                x=1
-            if (x==7):
-                x=6
-
-            board[y][x]= " " + letter
-
-            if(letter != 'F'):
-                board[y][x-1]= " " + letter
-            if((letter != 'F') & (letter != 'D')):
-                board[y][x+1]= " " + letter
-            if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
-                if (x>1):
-                    board[y][x-2]= " " + letter
-                if (x==1):
-                    board[y][x+2]= " " + letter
-    else:
-        place_ship(board, letter)
-        print ("doesn't work", end = "")
-
-def doesnt_clash(board, x, y, orientation, letter):
-
-    if (orientation == 0):
-        if (y == 0):
-            y = 1
-        if (y == 15):
-            y = 14
-
-    if (orientation == 1):
-        if (x == 0):
-            x = 1
-        if (x == 7):
-            x = 6
-
-    if (board[y][x] != " _"):
-        return False
-
-    if (orientation == 0):
-        if ((letter != 'F')):
-            if (board[y-1][x] != " _"):
-                return False
-        if ((letter != 'F') & (letter != 'D')):
-            if (board[y+1][x] != " _"):
-                return False
-        if ((letter != 'F') & (letter != 'D') & (letter!= 'C')):
-            if ((y == 14) & (board[y-2][x] != " _")):
-                return False
-            elif (y < 14):
-                if (board[y+2][x] != " _"):
-                    return False
-
-    print ("x: ", end="")
-    print (x)
-    print ("y: ", end="")
-    print (y)
-    if (orientation == 1):
-        if (letter != 'F'):
-            if (board[y][x-1] != " _"):
-                return False
-        if ((letter != 'F') & (letter != 'D')):
-            if (board[y][x+1] != " _"):
-                return False
-        if((letter != 'F') & (letter != 'D') & (letter!= 'C')):
-            if ((x == 6) & (board[y][x - 2] != " _")):
-                return False
-            if (x < 6):
-                if (board[y][x + 2] != " _"):
-                    return False
-    return True
-            
+      
 def get_x_input(coordinate):
     c = ord(input("Input value for x: "))
 
@@ -199,13 +42,6 @@ def hit_board(x,y,board):
     board[y][x]=' X'
     print ("You got a hit!")
 
-def get_coordinates_for_ships(player, coordinates_x, coordinates_y):
-    for i in range(0,16):
-        for j in range(0,8):
-            if player[i][j]!=" _":
-                coordinates_x.append(i)
-                coordinates_y.append(j)
-
 def check_win(player,coordinates_x, coordinates_y):
     win=False
     for i in range (0,len(coordinates_x)):
@@ -223,20 +59,20 @@ BoardSetupUtilities.set_up_board(player2)
 BoardSetupUtilities.set_up_board(empty)
 
 #place ships for player1
-place_ship(player1, 'F')
-place_ship(player1, 'D')
-place_ship(player1, 'C')
-place_ship(player1, 'B')
+BoardSetupUtilities.place_ship(player1, 'F')
+BoardSetupUtilities.place_ship(player1, 'D')
+BoardSetupUtilities.place_ship(player1, 'C')
+BoardSetupUtilities.place_ship(player1, 'B')
 
 #place ships for player2
-place_ship(player2, 'F')
-place_ship(player2, 'D')
-place_ship(player2, 'C')
-place_ship(player2, 'B')
+BoardSetupUtilities.place_ship(player2, 'F')
+BoardSetupUtilities.place_ship(player2, 'D')
+BoardSetupUtilities.place_ship(player2, 'C')
+BoardSetupUtilities.place_ship(player2, 'B')
 
 #get coordinates for ships on board
-get_coordinates_for_ships(player1,ship_x_coordinates_player1, ship_y_coordinates_player1)
-get_coordinates_for_ships(player2,ship_x_coordinates_player2, ship_y_coordinates_player2)
+BoardSetupUtilities.get_coordinates_for_ships(player1,ship_x_coordinates_player1, ship_y_coordinates_player1)
+BoardSetupUtilities.get_coordinates_for_ships(player2,ship_x_coordinates_player2, ship_y_coordinates_player2)
 
 #set turn to player1
 turn=1
@@ -254,7 +90,7 @@ for i in range(0, len(ship_x_coordinates_player1)):
 #store coordinates for x and y in variables
 while(win==0):
     win==check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
-    BoardSetupUtilities.clear_screen()
+    GameUtilities.clear_screen()
 
     print(win)
     if(win==True):
@@ -262,7 +98,7 @@ while(win==0):
         break
 
     #player1's turn
-    print_board(player1,empty)
+    GameUtilities.print_board(player1,empty)
 
     x=get_x_input(x)
 
@@ -274,7 +110,7 @@ while(win==0):
     hit_board(x,y,player2)
 
     win==check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
-    BoardSetupUtilities.clear_screen()
+    GameUtilities.clear_screen()
 
     print(win)
     if(win==True):
@@ -282,7 +118,7 @@ while(win==0):
         break
 
     #player2's turn
-    print_board(empty,player2)
+    GameUtilities.print_board(empty,player2)
 
     x=get_x_input(x)
 
@@ -296,7 +132,7 @@ while(win==0):
 
 #the board is printed with the numbers, letters and the two player's grids placed side by side.
 print ("Both players visible on the board.")
-print_board(player1, player2)
+GameUtilities.print_board(player1, player2)
 
 for i in range(0,len(ship_x_coordinates_player1)):
     print (ship_x_coordinates_player1[i], end=" ")
