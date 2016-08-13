@@ -1,29 +1,18 @@
 import random
-import os
+import BoardSetupUtilities
 
 player1 = []
 player2 = []
 empty = []
+
+# Board consists of two 2D arrays placed side by side.
+# Each 2D array is a grid with dimensions 16x8. You can specify positions within the 2D array to place objects.
 
 ship_x_coordinates_player1=[]
 ship_y_coordinates_player1=[]
 
 ship_x_coordinates_player2=[]
 ship_y_coordinates_player2=[]
-
-# Board consists of two 2D arrays placed side by side.
-# Each 2D array is a grid with dimensions 16x8. You can specify positions within the 2D array to place objects.
-
-def set_up_board(player):
-    for i in range (0, 16):
-        player.append([]) # Create an empty list in every element of the player list.
-
-    for i in range (0, 16):
-        for j in range (0,8):
-            player[i].append(" _") # Go through every element and assign " _"
-
-def clear_screen():
-	os.system('cls')
 	
 # Print out the board, taking each of the two lists as arguments.
 # Go through each line of the whole board and print the two player's lists side by side.
@@ -203,14 +192,12 @@ def get_y_input(coordinate):
     return c-1
 
 def hit_board(x,y,board):
-    # print ("x: ")
-    # print(x)
-    # print ("y: ")
-    # print(y)
-    if ( x > 7):
+    # If the x co-ordinate is greater than 7 i.e. it is on the right hand side of the board it needs to be reduced as each side is an individual 2D list.
+    if (x > 7):
         x = x - 8
 
     board[y][x]=' X'
+    print ("You got a hit!")
 
 def get_coordinates_for_ships(player, coordinates_x, coordinates_y):
     for i in range(0,16):
@@ -231,9 +218,9 @@ def check_win(player,coordinates_x, coordinates_y):
     return win
 
 #set up each player's half of the board.
-set_up_board(player1)
-set_up_board(player2)
-set_up_board(empty)
+BoardSetupUtilities.set_up_board(player1)
+BoardSetupUtilities.set_up_board(player2)
+BoardSetupUtilities.set_up_board(empty)
 
 #place ships for player1
 place_ship(player1, 'F')
@@ -259,14 +246,15 @@ x=ord('A')-1
 y=-1
 
 win=False
-for i in range(0,len(ship_x_coordinates_player1)):
-    print (ship_x_coordinates_player1[i], end=" ")
-    print ("", end=" ")
+for i in range(0, len(ship_x_coordinates_player1)):
+    print (ship_x_coordinates_player1[i], end="")
+    print (",", end="")
     print (ship_y_coordinates_player1[i])
+
 #store coordinates for x and y in variables
 while(win==0):
     win==check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
-    clear_screen()
+    BoardSetupUtilities.clear_screen()
 
     print(win)
     if(win==True):
@@ -286,7 +274,7 @@ while(win==0):
     hit_board(x,y,player2)
 
     win==check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
-    clear_screen()
+    BoardSetupUtilities.clear_screen()
 
     print(win)
     if(win==True):
