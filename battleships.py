@@ -1,6 +1,7 @@
 import random
 import BoardSetupUtilities
 import GameUtilities
+import InputUtilities
 
 player1 = []
 player2 = []
@@ -14,44 +15,6 @@ ship_y_coordinates_player1=[]
 
 ship_x_coordinates_player2=[]
 ship_y_coordinates_player2=[]
-      
-def get_x_input(coordinate):
-    c = ord(input("Input value for x: "))
-
-    while((c<(ord('A'))) | (c>(ord('P')))):
-        print("Please input letter between 'A' and 'K'")
-        c = ord(input("Input value for x: "))
-
-    return c-65
-
-def get_y_input(coordinate):
-    c = int(input("Input value for y: "))
-
-    print(c)
-    while((c<1) | (c>16)):
-        print("Please input number between 1 and 16")
-        c = int(input("Input value for y: "))
-
-    return c-1
-
-def hit_board(x,y,board):
-    # If the x co-ordinate is greater than 7 i.e. it is on the right hand side of the board it needs to be reduced as each side is an individual 2D list.
-    if (x > 7):
-        x = x - 8
-
-    board[y][x]=' X'
-    print ("You got a hit!")
-
-def check_win(player,coordinates_x, coordinates_y):
-    win=False
-    for i in range (0,len(coordinates_x)):
-        if player[coordinates_x[i]][coordinates_y[i]]!=" X":
-            print (coordinates_x[i])
-            print (coordinates_y[i])
-            win=False
-
-    print (win)
-    return win
 
 #set up each player's half of the board.
 BoardSetupUtilities.set_up_board(player1)
@@ -89,7 +52,7 @@ for i in range(0, len(ship_x_coordinates_player1)):
 
 #store coordinates for x and y in variables
 while(win==0):
-    win==check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
+    win==GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
     GameUtilities.clear_screen()
 
     print(win)
@@ -100,16 +63,16 @@ while(win==0):
     #player1's turn
     GameUtilities.print_board(player1,empty)
 
-    x=get_x_input(x)
+    x=InputUtilities.get_x_input(x)
 
     while ((x<7) | (x>15)):
         print("Please input letter between I and P.")
-        x=get_x_input(x)
+        x=InputUtilities.get_x_input(x)
 
     y=get_y_input(y)
     hit_board(x,y,player2)
 
-    win==check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
+    win==GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
     GameUtilities.clear_screen()
 
     print(win)
@@ -120,11 +83,11 @@ while(win==0):
     #player2's turn
     GameUtilities.print_board(empty,player2)
 
-    x=get_x_input(x)
+    x=InputUtilities.get_x_input(x)
 
     while ((x<0) | (x>7)):
         print("Please input letter between A and H.")
-        x=get_x_input(x)
+        x=InputUtilities.get_x_input(x)
 
     y=get_y_input(y)
 

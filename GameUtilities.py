@@ -48,3 +48,22 @@ def print_board(player1, player2):
         # New line.
         print ()
 
+def hit_board(x,y,board):
+    # If the x co-ordinate is greater than 7 i.e. it is on the right hand side of the board it needs to be reduced as each side is an individual 2D list.
+    if (x > 7):
+        x = x - 8
+
+    board[y][x]=' X'
+    print ("You got a hit!")
+
+def check_win(player,coordinates_x, coordinates_y):
+    win=False
+    for i in range (0,len(coordinates_x)):
+        if player[coordinates_x[i]][coordinates_y[i]]!=" X":
+            print (coordinates_x[i])
+            print (coordinates_y[i])
+            win=False
+
+    print (win)
+    return win
+
