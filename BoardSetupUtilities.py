@@ -27,7 +27,6 @@ def place_ship(board, letter):
 
     # Check if ship to be placed clashes with any existing ship's co-ordinates.
     if (doesnt_clash(board, x, y, position, letter)): 
-        print ("works, lad", end = "")
         if((position==0)):
 
             # If center of ship is at top row or bottom row of board, move it so it can fit.
@@ -69,7 +68,6 @@ def place_ship(board, letter):
                     board[y][x+2]= " " + letter
     else:
         place_ship(board, letter)
-        print ("doesn't work", end = "")
 
 def doesnt_clash(board, x, y, orientation, letter):
 
@@ -102,10 +100,6 @@ def doesnt_clash(board, x, y, orientation, letter):
                 if (board[y+2][x] != " _"):
                     return False
 
-    print ("x: ", end="")
-    print (x)
-    print ("y: ", end="")
-    print (y)
     if (orientation == 1):
         if (letter != 'F'):
             if (board[y][x-1] != " _"):

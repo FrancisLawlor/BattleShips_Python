@@ -23,42 +23,38 @@ BoardSetupUtilities.set_up_board(empty)
 
 #place ships for player1
 BoardSetupUtilities.place_ship(player1, 'F')
-BoardSetupUtilities.place_ship(player1, 'D')
-BoardSetupUtilities.place_ship(player1, 'C')
-BoardSetupUtilities.place_ship(player1, 'B')
+#BoardSetupUtilities.place_ship(player1, 'D')
+#BoardSetupUtilities.place_ship(player1, 'C')
+#BoardSetupUtilities.place_ship(player1, 'B')
 
 #place ships for player2
 BoardSetupUtilities.place_ship(player2, 'F')
-BoardSetupUtilities.place_ship(player2, 'D')
-BoardSetupUtilities.place_ship(player2, 'C')
-BoardSetupUtilities.place_ship(player2, 'B')
+#BoardSetupUtilities.place_ship(player2, 'D')
+#BoardSetupUtilities.place_ship(player2, 'C')
+#BoardSetupUtilities.place_ship(player2, 'B')
 
 #get coordinates for ships on board
-BoardSetupUtilities.get_coordinates_for_ships(player1,ship_x_coordinates_player1, ship_y_coordinates_player1)
-BoardSetupUtilities.get_coordinates_for_ships(player2,ship_x_coordinates_player2, ship_y_coordinates_player2)
+BoardSetupUtilities.get_coordinates_for_ships(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
+BoardSetupUtilities.get_coordinates_for_ships(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
 
 #set turn to player1
-turn=1
+turn = 1
 
 #initialise x and y
-x=ord('A')-1
-y=-1
+x = ord('A') - 1
+y = -1
 
-win=False
-for i in range(0, len(ship_x_coordinates_player1)):
-    print (ship_x_coordinates_player1[i], end="")
-    print (",", end="")
-    print (ship_y_coordinates_player1[i])
+win = False
 
 #store coordinates for x and y in variables
-while(win==0):
-    win==GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
-    GameUtilities.clear_screen()
+while(win == False):
+    for i in range(0, len(ship_x_coordinates_player1)):
+        print (ship_x_coordinates_player1[i], end = "")
+        print (", ", end = "")
+        print (ship_y_coordinates_player1[i])
 
-    print(win)
-    if(win==True):
-        print ("broken")
-        break
+    win == GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
+    GameUtilities.clear_screen()
 
     #player1's turn
     GameUtilities.print_board(player1,empty)
@@ -69,16 +65,11 @@ while(win==0):
         print("Please input letter between I and P.")
         x=InputUtilities.get_x_input(x)
 
-    y=get_y_input(y)
-    hit_board(x,y,player2)
+    y=InputUtilities.get_y_input(y)
+    GameUtilities.hit_board(x,y,player2)
 
     win==GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
     GameUtilities.clear_screen()
-
-    print(win)
-    if(win==True):
-        print ("broken")
-        break
 
     #player2's turn
     GameUtilities.print_board(empty,player2)
@@ -89,20 +80,10 @@ while(win==0):
         print("Please input letter between A and H.")
         x=InputUtilities.get_x_input(x)
 
-    y=get_y_input(y)
+    y=InputUtilities.get_y_input(y)
 
-    hit_board(x,y,player1)
+    GameUtilities.hit_board(x,y,player1)
 
 #the board is printed with the numbers, letters and the two player's grids placed side by side.
 print ("Both players visible on the board.")
 GameUtilities.print_board(player1, player2)
-
-for i in range(0,len(ship_x_coordinates_player1)):
-    print (ship_x_coordinates_player1[i], end=" ")
-    print ("", end=" ")
-    print (ship_y_coordinates_player1[i])
-
-for i in range(0,len(ship_x_coordinates_player2)):
-    print (ship_x_coordinates_player2[i], end=" ")
-    print ("", end=" ")
-    print (ship_y_coordinates_player2[i])
