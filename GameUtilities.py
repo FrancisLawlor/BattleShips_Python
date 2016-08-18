@@ -1,7 +1,8 @@
 import os
 
 def clear_screen():
-	os.system('clear')
+    for i in range (0, 99):
+	     print ()
 
 # Prints out the board, taking each of the two lists as arguments.
 # Involves printing two lists side by side, the current player, and the disguised board.
@@ -55,7 +56,7 @@ def hit_board(x, y, board):
         x = x - 8
 
     if ((board[y][x] != " _") & (board[y][x] != " X")):
-            print ("You got a hit!")
+            print ("A hit!\n")
 
     board[y][x]=' X'
 

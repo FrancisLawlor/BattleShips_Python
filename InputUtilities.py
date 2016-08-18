@@ -1,4 +1,4 @@
-def get_x_input(coordinate):
+def get_x_input():
     c = ord(input("Input value for x: "))
 
     while((c<(ord('A'))) | (c>(ord('P')))):
@@ -7,7 +7,7 @@ def get_x_input(coordinate):
 
     return c-65
 
-def get_y_input(coordinate):
+def get_y_input():
     c = int(input("Input value for y: "))
 
     print(c)
