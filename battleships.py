@@ -50,7 +50,6 @@ while (win == False):
 
     print("It's your turn, player", player, "\b!\n")
 	
-    #player1's turn
     GameUtilities.print_board(player1,empty)
 
     x=InputUtilities.get_x_input()
