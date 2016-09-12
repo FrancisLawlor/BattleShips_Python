@@ -23,15 +23,15 @@ BoardSetupUtilities.set_up_board(empty)
 
 #place ships for player1
 BoardSetupUtilities.place_ship(player1, 'F')
-#BoardSetupUtilities.place_ship(player1, 'D')
-#BoardSetupUtilities.place_ship(player1, 'C')
-#BoardSetupUtilities.place_ship(player1, 'B')
+BoardSetupUtilities.place_ship(player1, 'D')
+BoardSetupUtilities.place_ship(player1, 'C')
+BoardSetupUtilities.place_ship(player1, 'B')
 
 #place ships for player2
 BoardSetupUtilities.place_ship(player2, 'F')
-#BoardSetupUtilities.place_ship(player2, 'D')
-#BoardSetupUtilities.place_ship(player2, 'C')
-#BoardSetupUtilities.place_ship(player2, 'B')
+BoardSetupUtilities.place_ship(player2, 'D')
+BoardSetupUtilities.place_ship(player2, 'C')
+BoardSetupUtilities.place_ship(player2, 'B')
 
 #get coordinates for ships on board
 BoardSetupUtilities.get_coordinates_for_ships(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
@@ -51,6 +51,7 @@ while (win == False):
 
     print("It's your turn, player", player, "\b!\n")
 	
+	# Print board, without displaying opposing player's side.
     if (player == 1):
         GameUtilities.print_board(player1, empty)
     else:

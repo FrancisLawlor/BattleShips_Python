@@ -64,8 +64,6 @@ def check_win(player,coordinates_x, coordinates_y):
     win = True
     for i in range (0, len(coordinates_x)):
         if player[coordinates_x[i]][coordinates_y[i]]!=" X":
-            print (coordinates_x[i])
-            print (coordinates_y[i])
             win=False
 
     return win
