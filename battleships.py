@@ -39,11 +39,17 @@ BoardSetupUtilities.get_coordinates_for_ships(player2, ship_x_coordinates_player
 
 win = False
 
+print("Welcome to Battleships! Press enter to begin!")
+temp = input()
+
+player = 1
+
 #store coordinates for x and y in variables
 while (win == False):
-    win == GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
     GameUtilities.clear_screen()
 
+    print("It's your turn, player", player, "\b!\n")
+	
     #player1's turn
     GameUtilities.print_board(player1,empty)
 
@@ -59,6 +65,7 @@ while (win == False):
     GameUtilities.hit_board(x,y,player2)
 
     win==GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
+    
     #player2's turn
     GameUtilities.print_board(empty,player2)
 
