@@ -42,42 +42,62 @@ win = False
 print("Welcome to Battleships! Press enter to begin!")
 temp = input()
 
+# Player 1 goes first.
 player = 1
 
-#store coordinates for x and y in variables
 while (win == False):
     GameUtilities.clear_screen()
 
     print("It's your turn, player", player, "\b!\n")
 	
-    GameUtilities.print_board(player1,empty)
+    if (player == 1):
+        GameUtilities.print_board(player1, empty)
+    else:
+        GameUtilities.print_board(empty, player2)
 
-    x=InputUtilities.get_x_input()
-
-    while ((x<7) | (x>15)):
-        print("Please input letter between I and P.")
-        x=InputUtilities.get_x_input()
-
-    y=InputUtilities.get_y_input()
+	# Get x co-ordinate from user.
+    x = InputUtilities.get_x_input()
+    
+    if (player == 1):
+		
+		# Ensure input for player 1 corresponds to right half of board.
+        while ((x<7) | (x>15)):
+            print("Please input letter between I and P.")
+            x = InputUtilities.get_x_input()
+    else:
+	    
+	    # Ensure input for player 2 corresponds to left half of board.
+        while ((x<0) | (x>7)):
+            print("Please input letter between A and H.")
+            x = InputUtilities.get_x_input()
+            
+    # Get y co-ordinate from user.      
+    y = InputUtilities.get_y_input()
+    
     GameUtilities.clear_screen()
 
-    GameUtilities.hit_board(x,y,player2)
+    if (player == 1):
+        GameUtilities.hit_board(x, y, player2)
+        win = GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
+        
+        if (win == False):
+            print("Player 2 press enter to begin your turn!")
+            temp = input()
+            player = 2
+        else:
+            print("\t\t\tPlayer 1 wins!\n")
 
-    win==GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
-    
-    #player2's turn
-    GameUtilities.print_board(empty,player2)
+    else:
+        GameUtilities.hit_board(x, y, player1)
+        win = GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
+		
+        if (win == False):
+            print("Player 1 press enter to begin your turn!")
+            temp = input()
+            player = 1
+        else:
+            print("\t\t\tPlayer 2 wins!\n")
 
-    x=InputUtilities.get_x_input()
+#the board is printed with the numbers, letters and the two player's grids placed side by side
 
-    while ((x<0) | (x>7)):
-        print("Please input letter between A and H.")
-        x=InputUtilities.get_x_input()
-
-    y=InputUtilities.get_y_input()
-
-    GameUtilities.hit_board(x,y,player1)
-
-#the board is printed with the numbers, letters and the two player's grids placed side by side.
-print ("Both players visible on the board.")
 GameUtilities.print_board(player1, player2)
