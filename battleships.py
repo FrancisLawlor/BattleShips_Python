@@ -39,6 +39,7 @@ BoardSetupUtilities.get_coordinates_for_ships(player2, ship_x_coordinates_player
 
 win = False
 
+GameUtilities.clear_screen()
 print("Welcome to Battleships! Press enter to begin!")
 temp = input()
 
@@ -78,8 +79,8 @@ while (win == False):
 
     if (player == 1):
         GameUtilities.hit_board(x, y, player2)
-        win = GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
-        
+        win = GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
+                
         if (win == False):
             print("Player 2 press enter to begin your turn!")
             temp = input()
@@ -89,7 +90,7 @@ while (win == False):
 
     else:
         GameUtilities.hit_board(x, y, player1)
-        win = GameUtilities.check_win(player2, ship_x_coordinates_player2, ship_y_coordinates_player2)
+        win = GameUtilities.check_win(player1, ship_x_coordinates_player1, ship_y_coordinates_player1)
 		
         if (win == False):
             print("Player 1 press enter to begin your turn!")

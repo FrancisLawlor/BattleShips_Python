@@ -1,5 +1,5 @@
 def get_x_input():
-    c = ord(input("Input the column you'd like to hit: "))
+    c = ord(input("\nInput the column you'd like to hit: "))
 
     while((c<(ord('A'))) | (c>(ord('P')))):
         print("Please input letter between 'A' and 'P'!")
@@ -8,7 +8,7 @@ def get_x_input():
     return c-65
 
 def get_y_input():
-    c = int(input("Input the row you'd like to hit: "))
+    c = int(input("\nInput the row you'd like to hit: "))
 
     print(c)
     while((c<1) | (c>16)):
