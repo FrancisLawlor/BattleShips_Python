@@ -1,11 +1,20 @@
-def get_x_input():
-    c = ord(input("\nInput the column you'd like to hit: "))
+def get_x_input():    
+    appropriate_input = False
+    
+    while (appropriate_input == False):
+        appropriate_input = True
+        x_input = input("\nInput the column you'd like to hit: ")
+        
+        if (len(x_input) != 1):
+            print("Please input a single character..")
+            appropriate_input = False
+        else:
+            if ((ord(x_input) < (ord('A'))) | (ord(x_input) > (ord('P')))):
+                print("Please input letter between 'A' and 'P'!")
+                appropriate_input = False
+            
 
-    while((c<(ord('A'))) | (c>(ord('P')))):
-        print("Please input letter between 'A' and 'P'!")
-        c = ord(input("Input value for x: "))
-
-    return c-65
+    return ord(x_input) - 65
 
 def get_y_input():
     c = int(input("\nInput the row you'd like to hit: "))
