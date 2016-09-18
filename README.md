@@ -20,7 +20,7 @@ Navigate to local repo:
 > cd mypath/BattleShips_Python
 ```
 
-Run the hangman.py file:
+Run the battleships.py file:
 ```
 > python3 battleships.py
 ```
