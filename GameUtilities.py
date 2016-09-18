@@ -56,7 +56,7 @@ def hit_board(x, y, board):
         x = x - 8
 
     if ((board[y][x] != " _") & (board[y][x] != " X")):
-            print ("A hit!\n")
+            print ("It's a hit!\n")
 
     board[y][x]=' X'
 

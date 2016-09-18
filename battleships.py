@@ -43,6 +43,10 @@ GameUtilities.clear_screen()
 print("Welcome to Battleships! Press enter to begin!")
 temp = input()
 
+GameUtilities.clear_screen()
+print("Player 1, hit enter to begin your turn!")
+temp = input()
+
 # Player 1 goes first.
 player = 1
 
